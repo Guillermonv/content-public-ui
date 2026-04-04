@@ -1,6 +1,6 @@
 import type { Article, ArticleCategory, ArticlesResponse, ContentReview, GetArticlesParams } from './article.types'
 
-const API_BASE = '/api'
+const API_BASE = 'http://localhost:8081/api/v1'
 
 // ─── HTTP ────────────────────────────────────────────────────────────────────
 
