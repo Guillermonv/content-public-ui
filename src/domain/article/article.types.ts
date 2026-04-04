@@ -42,8 +42,6 @@ export interface ContentReview {
   short_description: string
   message: string
   status: string
-  type: string
-  sub_type: string
   category: string
   sub_category: string
   image_url: string
