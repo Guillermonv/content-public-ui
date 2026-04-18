@@ -3,6 +3,14 @@ import { useState } from 'react'
 import type { ArticleCategory } from '../../domain/article/article.types'
 import { CATEGORIES } from '../../domain/category/category.types'
 
+const CATEGORY_EMOJIS: Record<string, string> = {
+  all: '🌐',
+  finanzas: '💰',
+  tecnologia: '💻',
+  bienestar: '🌿',
+  trending: '🔥',
+}
+
 interface CategoryFilterProps {
   activeCategory: ArticleCategory | null
   onCategoryChange: (category: ArticleCategory | null) => void
@@ -26,23 +34,24 @@ export function CategoryFilter({ activeCategory, onCategoryChange }: CategoryFil
 
   return (
     <div className="flex items-center justify-between gap-4">
-      {/* Category tabs — horizontally scrollable on mobile */}
       <div className="flex-1 overflow-x-auto scrollbar-hide">
         <div className="flex gap-2 min-w-max pb-1">
           {CATEGORIES.map((cat) => {
             const isActive =
               cat.id === 'all' ? activeCategory === null : activeCategory === cat.id
+            const emoji = CATEGORY_EMOJIS[cat.id] ?? ''
 
             return (
               <button
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary-500 text-white shadow-sm'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? `${cat.bgClass} text-white shadow-md scale-105`
+                    : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105'
                 }`}
               >
+                <span>{emoji}</span>
                 {cat.label}
               </button>
             )
@@ -50,18 +59,17 @@ export function CategoryFilter({ activeCategory, onCategoryChange }: CategoryFil
         </div>
       </div>
 
-      {/* Sort dropdown — hidden on very small screens */}
       <div className="relative hidden sm:block flex-shrink-0">
         <button
           onClick={() => setSortOpen((o) => !o)}
-          className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-full hover:bg-gray-50 dark:hover:bg-gray-800 bg-white dark:bg-gray-800 transition-colors"
         >
           {activeSort.label}
-          <ChevronDown size={14} className={`transition-transform ${sortOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown size={14} className={`transition-transform duration-200 ${sortOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {sortOpen && (
-          <div className="absolute right-0 top-full mt-1 z-50 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden">
+          <div className="absolute right-0 top-full mt-1.5 z-50 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl overflow-hidden">
             {SORT_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
@@ -71,7 +79,7 @@ export function CategoryFilter({ activeCategory, onCategoryChange }: CategoryFil
                 }}
                 className={`w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 ${
                   opt.value === sortValue
-                    ? 'text-primary-600 dark:text-primary-400 font-medium'
+                    ? 'text-primary-600 dark:text-primary-400 font-semibold'
                     : 'text-gray-700 dark:text-gray-300'
                 }`}
               >

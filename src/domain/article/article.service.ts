@@ -108,16 +108,6 @@ const PLACEHOLDER_AUTHORS = [
   { name: 'Laura Díaz', avatar: 'https://i.pravatar.cc/40?img=9' },
 ]
 
-const CATEGORY_IMAGE_SEEDS: Record<string, string> = {
-  TECH: 'technology',
-  TECHNOLOGY: 'technology',
-  FINANCE: 'finance',
-  FINANZAS: 'finance',
-  HEALTH: 'wellness',
-  WELLNESS: 'wellness',
-  BIENESTAR: 'wellness',
-  TRENDING: 'trending',
-}
 
 function getImageUrl(review: ContentReview): string {
   return `https://picsum.photos/seed/article-${review.id}/800/450`
