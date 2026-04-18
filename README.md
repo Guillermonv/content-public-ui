@@ -1,6 +1,5 @@
-# Xana — Contenido que importa
+# Xana —
 
-Portal de contenido editorial con artículos de finanzas, tecnología y bienestar.
 <img width="1088" height="944" alt="Screenshot 2026-04-18 at 14 27 28" src="https://github.com/user-attachments/assets/137a486e-cffd-4897-adf9-3179f1f69edb" />
 
 
