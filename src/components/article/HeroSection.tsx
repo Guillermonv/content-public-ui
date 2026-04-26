@@ -1,15 +1,10 @@
 import type { Article } from '../../domain/article/article.types'
 import { ArticleHeroCard } from './ArticleHeroCard'
+import { LiveFeed } from './LiveFeed'
 
 interface HeroSectionProps {
   articles: Article[]
   isLoading: boolean
-}
-
-function MainHeroSkeleton() {
-  return (
-    <div className="rounded-2xl overflow-hidden animate-pulse bg-gray-200 dark:bg-gray-700 min-h-[320px] sm:min-h-[400px] lg:min-h-[460px]" />
-  )
 }
 
 function SecondaryHeroSkeleton() {
@@ -27,7 +22,7 @@ function SecondaryHeroSkeleton() {
 }
 
 export function HeroSection({ articles, isLoading }: HeroSectionProps) {
-  const [main, ...secondary] = isLoading ? [] : articles.slice(0, 4)
+  const secondary = isLoading ? [] : articles.slice(0, 3)
 
   return (
     <section aria-label="Artículos destacados">
@@ -37,14 +32,9 @@ export function HeroSection({ articles, isLoading }: HeroSectionProps) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4">
-        {/* Main hero — takes remaining space */}
+        {/* Live feed — takes remaining space */}
         <div className="flex-1 min-h-[320px] sm:min-h-[400px] lg:min-h-[460px]">
-          {isLoading
-            ? <MainHeroSkeleton />
-            : main
-              ? <ArticleHeroCard article={main} variant="main" />
-              : null
-          }
+          <LiveFeed />
         </div>
 
         {/* Secondary stack — same width as TrendingSidebar */}
