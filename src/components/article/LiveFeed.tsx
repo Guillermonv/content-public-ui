@@ -61,7 +61,7 @@ export function LiveFeed() {
   }, [])
 
   return (
-    <div className="flex flex-col h-full min-h-[320px] sm:min-h-[400px] lg:min-h-[460px] bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
       <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex-shrink-0">
         <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
         <span className="text-xs font-bold text-red-500 uppercase tracking-wider">En vivo</span>
