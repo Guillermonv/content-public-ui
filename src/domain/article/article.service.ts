@@ -1,187 +1,57 @@
-import type { Article, ArticleCategory, ArticlesResponse, ContentReview, GetArticlesParams } from './article.types'
+import type { Article, SectionItem, SectionsResponse } from './article.types'
+import { MOCK_SECTIONS } from './article.mock'
 
-const API_BASE = 'http://localhost:8081/api/v1'
-
-// ─── HTTP ────────────────────────────────────────────────────────────────────
-
-interface PaginatedContentResponse {
-  reviews: ContentReview[]
-  total: number
-  hasMore: boolean
-}
-
-async function fetchPaginatedContent(
-  page: number,
-  pageSize: number,
-  category?: string,
-): Promise<PaginatedContentResponse> {
-  const params = new URLSearchParams({
-    page: String(page),
-    page_size: String(pageSize),
-  })
-  if (category) params.set('category', category)
-
-  const res = await fetch(`${API_BASE}/content?${params}`)
-
-  if (!res.ok) {
-    throw new Error(`HTTP ${res.status}: ${res.statusText}`)
-  }
-
-  const raw = await res.json()
-
-  let reviews: ContentReview[]
-  let total: number
-  let hasMore: boolean
-
-  if (Array.isArray(raw)) {
-    reviews = raw as ContentReview[]
-    total = reviews.length
-    hasMore = reviews.length === pageSize
-  } else if (Array.isArray(raw?.data)) {
-    reviews = raw.data as ContentReview[]
-    total = raw.total ?? reviews.length
-    hasMore = raw.has_next ?? raw.has_more ?? raw.hasMore ?? page * pageSize < total
-  } else if (Array.isArray(raw?.content_reviews)) {
-    reviews = raw.content_reviews as ContentReview[]
-    total = raw.total ?? reviews.length
-    hasMore = raw.has_next ?? raw.has_more ?? raw.hasMore ?? page * pageSize < total
-  } else if (Array.isArray(raw?.items)) {
-    reviews = raw.items as ContentReview[]
-    total = raw.total ?? reviews.length
-    hasMore = raw.has_next ?? raw.has_more ?? raw.hasMore ?? page * pageSize < total
-  } else {
-    console.error('Unexpected /content response shape:', raw)
-    reviews = []
-    total = 0
-    hasMore = false
-  }
-
-  return { reviews, total, hasMore }
-}
-
-// Cache for detail/featured lookups (large page to cover all articles)
-let cachedAllReviews: ContentReview[] | null = null
-
-async function fetchAllReviews(): Promise<ContentReview[]> {
-  if (cachedAllReviews) return cachedAllReviews
-  const { reviews } = await fetchPaginatedContent(1, 1000)
-  cachedAllReviews = reviews
-  return reviews
-}
-
-// ─── Mappers ────────────────────────────────────────────────────────────────
-
-const CATEGORY_MAP: Record<string, ArticleCategory> = {
-  TECH: 'tecnologia',
-  TECHNOLOGY: 'tecnologia',
-  FINANCE: 'finanzas',
-  FINANZAS: 'finanzas',
-  HEALTH: 'bienestar',
-  WELLNESS: 'bienestar',
-  BIENESTAR: 'bienestar',
-  TRENDING: 'trending',
-}
-
-function mapCategory(raw: string): ArticleCategory {
-  return CATEGORY_MAP[raw?.toUpperCase()] ?? 'tecnologia'
-}
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8081/api/v1'
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
 
 function estimateReadTime(text: string): number {
-  const words = text.trim().split(/\s+/).length
-  return Math.max(1, Math.round(words / 200))
+  return Math.max(1, Math.round(text.trim().split(/\s+/).length / 200))
 }
 
-function slugify(title: string): string {
-  return title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-}
-
-const PLACEHOLDER_AUTHORS = [
-  { name: 'Ana López', avatar: 'https://i.pravatar.cc/40?img=1' },
-  { name: 'Carlos Tech', avatar: 'https://i.pravatar.cc/40?img=3' },
-  { name: 'María Wellness', avatar: 'https://i.pravatar.cc/40?img=5' },
-  { name: 'Pedro Gómez', avatar: 'https://i.pravatar.cc/40?img=7' },
-  { name: 'Laura Díaz', avatar: 'https://i.pravatar.cc/40?img=9' },
-]
-
-
-function getImageUrl(review: ContentReview): string {
-  return `https://picsum.photos/seed/article-${review.id}/800/450`
-}
-
-function mapReviewToArticle(review: ContentReview, index: number): Article {
+export function itemToArticle(item: SectionItem): Article {
   return {
-    id: String(review.id),
-    title: review.title,
-    excerpt: review.short_description,
-    content: review.message,
-    image: getImageUrl(review),
-    category: mapCategory(review.category),
-    author: PLACEHOLDER_AUTHORS[index % PLACEHOLDER_AUTHORS.length],
-    publishedAt: review.created ?? new Date(0).toISOString(),
-    readTime: estimateReadTime(review.message),
-    featured: false,
-    slug: review.slug || slugify(review.title),
+    id: String(item.id),
+    title: item.title,
+    slug: item.slug,
+    excerpt: item.short_description,
+    content: item.message,
+    image: `https://picsum.photos/seed/article-${item.id}/800/450`,
+    author: 'Redacción Xana',
+    readTime: estimateReadTime(item.message),
   }
 }
 
-// ─── Public API ─────────────────────────────────────────────────────────────
+export async function getSections(): Promise<SectionsResponse> {
+  if (USE_MOCK) return MOCK_SECTIONS
 
-export async function getArticles(params: GetArticlesParams): Promise<ArticlesResponse> {
-  const { reviews, total, hasMore } = await fetchPaginatedContent(
-    params.page,
-    params.pageSize,
-    params.category,
-  )
-
-  const articles: Article[] = reviews.map((r, i) => ({
-    ...mapReviewToArticle(r, i),
-    featured: false,
-  }))
-
-  return { articles, total, page: params.page, pageSize: params.pageSize, hasMore }
-}
-
-export async function searchArticles(params: { q: string; page: number; pageSize: number }): Promise<ArticlesResponse> {
-  const urlParams = new URLSearchParams({
-    q: params.q,
-    page: String(params.page),
-    page_size: String(params.pageSize),
-  })
-
-  const res = await fetch(`${API_BASE}/content/search?${urlParams}`)
+  const res = await fetch(`${API_BASE}/content`)
   if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`)
 
   const raw = await res.json()
-  const reviews: ContentReview[] = Array.isArray(raw?.data) ? raw.data : []
-  const articles = reviews.map((r, i) => mapReviewToArticle(r, i))
+  if (Array.isArray(raw?.sections)) return { sections: raw.sections }
 
-  return {
-    articles,
-    total: reviews.length,
-    page: params.page,
-    pageSize: params.pageSize,
-    hasMore: raw.has_next ?? false,
-  }
+  throw new Error('Formato de respuesta inesperado de la API')
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article> {
-  const res = await fetch(`${API_BASE}/content/slug/${encodeURIComponent(slug)}`)
-  if (res.ok) {
-    const review: ContentReview = await res.json()
-    const allReviews = await fetchAllReviews()
-    const index = allReviews.findIndex((r) => r.id === review.id)
-    return mapReviewToArticle(review, index >= 0 ? index : 0)
+  if (USE_MOCK) {
+    for (const section of MOCK_SECTIONS.sections) {
+      const item = section.items.find((i) => i.slug === slug)
+      if (item) return itemToArticle(item)
+    }
+    throw new Error(`Artículo no encontrado: ${slug}`)
   }
 
-  // fallback: buscar en caché local
-  const reviews = await fetchAllReviews()
-  const index = reviews.findIndex((r) => (r.slug || slugify(r.title ?? '')) === slug)
-  if (index === -1) throw new Error(`Article not found: ${slug}`)
-  return { ...mapReviewToArticle(reviews[index], index), featured: index < 3 }
-}
+  const res = await fetch(`${API_BASE}/content/slug/${encodeURIComponent(slug)}`)
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`)
 
+  const raw = await res.json()
+  const item: SectionItem = {
+    id: raw.id,
+    title: raw.title,
+    slug: raw.slug ?? slug,
+    short_description: raw.short_description,
+    message: raw.message,
+  }
+  return itemToArticle(item)
+}
