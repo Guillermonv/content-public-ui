@@ -184,5 +184,37 @@ export const MOCK_SECTIONS: SectionsResponse = {
         },
       ],
     },
+    {
+      name: 'Sección 5',
+      items: [
+        {
+          id: 501,
+          title: 'El Parlamento Europeo aprueba la primera ley global de regulación de inteligencia artificial',
+          slug: 'parlamento-europeo-ley-ia-regulacion',
+          short_description:
+            'La Unión Europea se convierte en la primera potencia mundial en legislar de forma integral sobre el uso de la inteligencia artificial, estableciendo categorías de riesgo y prohibiciones.',
+          message:
+            'El Parlamento Europeo aprobó por amplia mayoría la primera ley integral de regulación de inteligencia artificial del mundo. La normativa establece categorías de riesgo para los sistemas de IA y prohíbe aplicaciones consideradas de alto riesgo para los derechos fundamentales.',
+        },
+        {
+          id: 502,
+          title: 'Bitcoin supera los 120.000 dólares por primera vez impulsado por fondos institucionales',
+          slug: 'bitcoin-120000-dolares-fondos-institucionales',
+          short_description:
+            'La criptomoneda líder alcanzó un nuevo máximo histórico tras la aprobación de ETF al contado en varios mercados y la entrada masiva de fondos de pensiones estadounidenses.',
+          message:
+            'Bitcoin alcanzó un nuevo máximo histórico superando los 120.000 dólares, impulsado principalmente por la entrada masiva de inversores institucionales. Los fondos de pensiones y ETF aprobados recientemente han atraído miles de millones de dólares al mercado cripto.',
+        },
+        {
+          id: 503,
+          title: 'SpaceX completa el primer viaje comercial de ida y vuelta a la Luna con pasajeros privados',
+          slug: 'spacex-viaje-luna-pasajeros-privados',
+          short_description:
+            'La misión dearMoon completó con éxito su viaje alrededor de la Luna, marcando un hito en el turismo espacial privado con ocho pasajeros a bordo del Starship.',
+          message:
+            'SpaceX completó con éxito la primera misión comercial de turismo lunar de la historia. El Starship transportó a ocho pasajeros privados en un viaje de seis días alrededor de la Luna, cumpliendo con todos los objetivos de la misión y regresando de forma segura a la Tierra.',
+        },
+      ],
+    },
   ],
 }

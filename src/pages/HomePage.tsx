@@ -4,6 +4,7 @@ import { Section1Layout } from '../components/article/Section1Layout'
 import { Section2Layout } from '../components/article/Section2Layout'
 import { Section3Layout } from '../components/article/Section3Layout'
 import { Section4Layout } from '../components/article/Section4Layout'
+import { Section5Layout } from '../components/article/Section5Layout'
 
 function LoadingSkeleton() {
   return (
@@ -111,9 +112,16 @@ export function HomePage() {
             </section>
           )
         }
+        if (index === 3) {
+          return (
+            <section key={section.name}>
+              <Section4Layout articles={articles} name={section.name} />
+            </section>
+          )
+        }
         return (
           <section key={section.name}>
-            <Section4Layout articles={articles} name={section.name} />
+            <Section5Layout articles={articles} name={section.name} />
           </section>
         )
       })}
