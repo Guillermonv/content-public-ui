@@ -2,6 +2,7 @@ import { useSections } from '../domain/article/article.hooks'
 import { itemToArticle } from '../domain/article/article.service'
 import { Section1Layout } from '../components/article/Section1Layout'
 import { Section2Layout } from '../components/article/Section2Layout'
+import { Section3Layout } from '../components/article/Section3Layout'
 
 function LoadingSkeleton() {
   return (
@@ -85,7 +86,7 @@ export function HomePage() {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8">
       {sections.map((section, index) => {
         const articles = section.items.map(itemToArticle)
         if (index === 0) {
@@ -95,9 +96,16 @@ export function HomePage() {
             </section>
           )
         }
+        if (index === 1) {
+          return (
+            <section key={section.name}>
+              <Section2Layout articles={articles} name={section.name} />
+            </section>
+          )
+        }
         return (
           <section key={section.name}>
-            <Section2Layout articles={articles} name={section.name} />
+            <Section3Layout articles={articles} name={section.name} />
           </section>
         )
       })}

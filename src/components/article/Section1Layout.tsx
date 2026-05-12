@@ -27,7 +27,7 @@ function SideCard({ article }: CardProps) {
           <h3 className="text-sm font-bold leading-snug text-gray-900 dark:text-gray-100 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
             {article.title}
           </h3>
-          <div className="h-px w-full bg-gray-200 dark:bg-gray-700 my-2" />
+          <div className="h-px w-1/2 bg-gray-400 dark:bg-gray-600 my-2" />
           <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
             {article.excerpt}
           </p>
@@ -89,19 +89,19 @@ export function Section1Layout({ articles }: Section1LayoutProps) {
           Grid height: driven by side card content (square image + text × 2)
           Hero: h-full fills whatever the side cards establish
       */}
-      <div className="hidden md:grid grid-cols-4 gap-6">
+      <div className="hidden md:grid grid-cols-4">
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 pr-3 border-r border-gray-400 dark:border-gray-600">
           {left.map((a) => (
             <SideCard key={a.id} article={a} />
           ))}
         </div>
 
-        <div className="col-span-2">
+        <div className="col-span-2 px-3 border-r border-gray-400 dark:border-gray-600">
           {hero && <HeroCard article={hero} />}
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 pl-3">
           {right.map((a) => (
             <SideCard key={a.id} article={a} />
           ))}
@@ -126,7 +126,7 @@ export function Section1Layout({ articles }: Section1LayoutProps) {
             <h2 className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-gray-100 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {hero.title}
             </h2>
-            <div className="h-px w-full bg-gray-200 dark:bg-gray-700 my-2" />
+            <div className="h-px w-full bg-gray-400 dark:bg-gray-600 my-2" />
             <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-3 mb-2">
               {hero.excerpt}
             </p>

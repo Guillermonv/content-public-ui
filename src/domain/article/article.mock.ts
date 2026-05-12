@@ -102,5 +102,46 @@ export const MOCK_SECTIONS: SectionsResponse = {
         },
       ],
     },
+    {
+      name: 'Sección 3',
+      items: [
+        {
+          id: 301,
+          title: 'Ciencia mexicana transforma el veneno de alacrán y el chile habanero en antibióticos contra bacterias resistentes',
+          slug: 'alacran-chile-antibioticos-mexico',
+          short_description:
+            'Investigadores mexicanos desarrollaron compuestos antimicrobianos derivados del veneno de alacrán y capsaicina del chile habanero para combatir bacterias resistentes.',
+          message:
+            'Un equipo de investigadores mexicanos ha logrado transformar dos elementos característicos de México en poderosas herramientas contra las bacterias resistentes a los antibióticos convencionales. El veneno del alacrán y la capsaicina del chile habanero se combinaron para crear nuevos compuestos antimicrobianos. Los resultados preliminares son prometedores.',
+        },
+        {
+          id: 302,
+          title: 'La misión que puso a cuatro personas a simular vivir en Marte por un año se enfrenta a su punto crítico',
+          slug: 'mision-marte-simulacion-nasa',
+          short_description:
+            'Los cuatro voluntarios de la misión Mars Dune Alpha de la NASA completan su simulación de 378 días en un hábitat marciano artificial en Houston.',
+          message:
+            'Cuatro voluntarios han completado casi un año dentro del hábitat CHAPEA de la NASA, simulando las condiciones de vida en Marte. El proyecto busca comprender los efectos psicológicos y físicos del aislamiento prolongado en preparación para futuras misiones reales al planeta rojo.',
+        },
+        {
+          id: 303,
+          title: '8 hábitos sencillos que reducen el riesgo de Alzheimer y otras formas de demencia',
+          slug: 'habitos-reducen-alzheimer-demencia',
+          short_description:
+            'Tener buenas amistades, usar el tiempo libre para aprender cosas nuevas y llevar una dieta sana son algunos de los simples hábitos de vida saludables.',
+          message:
+            'Investigadores han identificado ocho hábitos cotidianos que pueden reducir significativamente el riesgo de desarrollar Alzheimer y otras formas de demencia. Entre ellos destacan mantener relaciones sociales activas, seguir una dieta mediterránea, realizar ejercicio regular y mantener el cerebro activo mediante el aprendizaje continuo.',
+        },
+        {
+          id: 304,
+          title: 'El cerebro sigue analizando y registrando información bajo anestesia general y nadie lo sabía',
+          slug: 'cerebro-anestesia-general-procesamiento',
+          short_description:
+            'En la práctica clínica, estos hallazgos podrían impulsar el desarrollo de nuevas estrategias para pacientes en coma o en estados vegetativos a causa de traumatismos craneales graves.',
+          message:
+            'Un estudio revolucionario ha demostrado que el cerebro humano continúa procesando información sensorial incluso bajo anestesia general profunda. Este descubrimiento podría cambiar fundamentalmente nuestra comprensión de la consciencia y abrir nuevas vías de tratamiento para pacientes en estados de consciencia mínima.',
+        },
+      ],
+    },
   ],
 }
