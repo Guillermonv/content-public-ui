@@ -143,5 +143,46 @@ export const MOCK_SECTIONS: SectionsResponse = {
         },
       ],
     },
+    {
+      name: 'Sección 4',
+      items: [
+        {
+          id: 401,
+          title: 'James Webb capta la atmósfera de un exoplaneta con agua y nubes de arena a 48 años luz',
+          slug: 'james-webb-exoplaneta-agua-nubes-arena',
+          short_description:
+            'El telescopio espacial James Webb detectó por primera vez señales simultáneas de vapor de agua y partículas de silicato en la atmósfera de un exoplaneta fuera del sistema solar.',
+          message:
+            'El telescopio James Webb ha logrado un hito sin precedentes al detectar simultáneamente vapor de agua y nubes de silicato en la atmósfera de un exoplaneta ubicado a 48 años luz de la Tierra. Este descubrimiento abre nuevas posibilidades para la búsqueda de planetas potencialmente habitables.',
+        },
+        {
+          id: 402,
+          title: 'La IA ya supera a los médicos en el diagnóstico de enfermedades raras con síntomas difusos',
+          slug: 'ia-diagnostico-enfermedades-raras-medicos',
+          short_description:
+            'Un nuevo modelo de inteligencia artificial entrenado con millones de historiales clínicos logra identificar enfermedades raras con una precisión un 34% mayor que los especialistas humanos.',
+          message:
+            'Un estudio publicado en Nature Medicine revela que un sistema de IA entrenado con millones de casos clínicos supera a los médicos especialistas en el diagnóstico de enfermedades raras. El modelo analiza síntomas difusos y patrones no obvios que frecuentemente llevan a diagnósticos tardíos o incorrectos.',
+        },
+        {
+          id: 403,
+          title: 'China lanza su primera estación espacial comercial privada para competir con SpaceX',
+          slug: 'china-estacion-espacial-privada-spacex',
+          short_description:
+            'Una startup china respaldada por inversores privados lanzó con éxito el primer módulo de su estación espacial comercial, marcando un hito en la carrera espacial privada asiática.',
+          message:
+            'China ha dado un paso significativo en la comercialización del espacio con el lanzamiento del primer módulo de una estación espacial totalmente privada. La iniciativa, financiada por inversores del sector tecnológico, busca ofrecer servicios de investigación y turismo espacial a partir de 2028.',
+        },
+        {
+          id: 404,
+          title: 'El nuevo material más resistente del mundo es transparente y más liviano que el aluminio',
+          slug: 'material-resistente-transparente-liviano',
+          short_description:
+            'Investigadores del MIT desarrollaron un polímero bidimensional que supera en resistencia al acero y el kevlar, siendo completamente transparente y con una densidad extremadamente baja.',
+          message:
+            'Un equipo del MIT ha sintetizado un nuevo material polimérico de estructura bidimensional que promete revolucionar múltiples industrias. El compuesto es más resistente que el acero y el kevlar combinados, completamente transparente a la luz visible y significativamente más liviano que el aluminio.',
+        },
+      ],
+    },
   ],
 }

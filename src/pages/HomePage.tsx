@@ -3,6 +3,7 @@ import { itemToArticle } from '../domain/article/article.service'
 import { Section1Layout } from '../components/article/Section1Layout'
 import { Section2Layout } from '../components/article/Section2Layout'
 import { Section3Layout } from '../components/article/Section3Layout'
+import { Section4Layout } from '../components/article/Section4Layout'
 
 function LoadingSkeleton() {
   return (
@@ -103,9 +104,16 @@ export function HomePage() {
             </section>
           )
         }
+        if (index === 2) {
+          return (
+            <section key={section.name}>
+              <Section3Layout articles={articles} name={section.name} />
+            </section>
+          )
+        }
         return (
           <section key={section.name}>
-            <Section3Layout articles={articles} name={section.name} />
+            <Section4Layout articles={articles} name={section.name} />
           </section>
         )
       })}
